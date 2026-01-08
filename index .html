@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Tracklists Search</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <h1>DJ Tracklists: Filter by DJ, Year, Event, etc.</h1>
+    <table id="tracklistTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>From Track</th>
+                <th>To Track</th>
+                <th>Tease 1</th>
+                <th>Tease 2</th>
+                <th>Tease 3</th>
+                <th>Tease 4</th>
+                <th>DJ</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+        // Load and parse the CSV
+        Papa.parse("normalized.csv", {  // Replace with your normalized CSV filename
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                $('#tracklistTable').DataTable({
+                    data: results.data,
+                    columns: [
+                        { data: 'from_track' },
+                        { data: 'to_track' },
+                        { data: 'tease_1' },
+                        { data: 'tease_2' },
+                        { data: 'tease_3' },
+                        { data: 'tease_4' },
+                        { data: 'dj' },
+                        { data: 'event' },
+                        { data: 'date' },
+                        { data: 'year' }
+                    ],
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    scrollX: true
+                });
+            }
+        });
+    </script>
+</body>
+</html>
